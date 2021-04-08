@@ -80,7 +80,7 @@ ${
     )}, ${fallbackWorkerPath});\n}\n`;
   }
 
-  return `${loaderContent.target === 'node' 
+  return `${loaderContext.target === 'node' 
     ? `${esModule 
       ? "import {Worker as WConstructor} from 'worker_threads'; import {resolve} from 'path';"
       : "const WConstructor = require('worker_threads').Worker; const resolve = require('path').resolve;"}
