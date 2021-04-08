@@ -80,7 +80,13 @@ ${
     )}, ${fallbackWorkerPath});\n}\n`;
   }
 
-  return `${
+  return `${loaderContent.target === 'node' 
+    ? `${esModule 
+      ? "import {Worker as WConstructor} from 'worker_threads'; import {resolve} from 'path';"
+      : "const WConstructor = require('worker_threads').Worker; const resolve = require('path').resolve;"}
+      const Worker = function(src,options){return new WConstructor(resolve(__dirname, src), options)}`
+    : ""}
+  ${
     esModule ? "export default" : "module.exports ="
   } function ${fnName}() {\n  return new ${workerConstructor}(__webpack_public_path__ + ${JSON.stringify(
     workerFilename
